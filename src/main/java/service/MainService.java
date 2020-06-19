@@ -32,11 +32,12 @@ public class MainService {
         return SingletonHolder.INSTANCE;
     }
 
-    public Optional<Client> login(String codClient, int pin) {
+
+    public Optional<Client> login(String codClient) {
         ClientDao clientDao = new ClientDao(con);
         try {
-            Optional<Client> optionalClient = clientDao.findClient(codClient, pin);
-            if (optionalClient.isPresent() && !getContClient(optionalClient.get()).isBlocat()) {
+            Optional<Client> optionalClient = clientDao.findClient(codClient);
+            if (optionalClient.isPresent()) {
                 return optionalClient;
             }
         } catch (SQLException e) {
@@ -45,13 +46,12 @@ public class MainService {
         return Optional.empty();
     }
 
-    public void blocareCont(String codClient) {
+    public void updateClientByAutentificariGresite(String codClient) {
         ClientDao clientDao = new ClientDao(con);
-        ContDao contDao = new ContDao(con);
         try {
             Optional<Client> optionalClient = clientDao.findClient(codClient);
             if (optionalClient.isPresent()) {
-                contDao.blocareCont(optionalClient.get());
+                clientDao.updateClientByAutentificariGresite(codClient);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -7,8 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class ContDao {
     private final Connection con;
@@ -18,13 +17,9 @@ public class ContDao {
     }
 
     public void populareDB(Integer idClient) {
-        String sql = "INSERT INTO Conturi (nrCont, valoare, blocat, idClient) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO Conturi (nrCont, valoare, idClient) VALUES (?, ?, ?);";
 
-        String nrCont = new Random()
-                .ints(48, 90)
-                .limit(13)
-                .mapToObj(i -> String.valueOf((char) i))
-                .collect(Collectors.joining());
+        String nrCont = String.valueOf(UUID.randomUUID()).toUpperCase();
 
         int max = 9999, min = 1, range = max - min + 1;
         double valoare = (int) (Math.random() * range) + min;
@@ -32,8 +27,7 @@ public class ContDao {
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, nrCont);
             stmt.setDouble(2, valoare);
-            stmt.setBoolean(3, false);
-            stmt.setInt(4, idClient);
+            stmt.setInt(3, idClient);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -51,24 +45,15 @@ public class ContDao {
                 int id = rs.getInt("id");
                 String nrCont = rs.getString("nrCont");
                 double valoare = rs.getDouble("valoare");
-                boolean blocat = rs.getBoolean("blocat");
                 int idClient = rs.getInt("idClient");
                 if (idClient == client.getId()) {
-                    cont = new Cont(id, nrCont, valoare, blocat, idClient);
+                    cont = new Cont(id, nrCont, valoare, idClient);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return cont;
-    }
-
-    public void blocareCont(Client client) throws SQLException {
-        String sql = "UPDATE Conturi SET blocat=1 WHERE nrCont=?;";
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, getContClient(client).getNrCont());
-            stmt.executeUpdate();
-        }
     }
 
     public void retrageBani(Client client, double valoareDeRetras) throws SQLException {

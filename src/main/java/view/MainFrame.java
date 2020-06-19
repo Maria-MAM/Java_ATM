@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
         exitButton.addActionListener(e -> exit());
 
         setLocationRelativeTo(null);
-        setSize(400, 400);
+        setSize(500, 400);
         setVisible(true);
         // pentru a pozitiona fereastra mea exact in centru ecranului
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

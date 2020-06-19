@@ -18,10 +18,10 @@ public class RetrageForm extends JFrame {
 
 
         OKButton.addActionListener(ev -> retrageBani());
-        inapoiButton.addActionListener(ev -> new MainFrame());
+        inapoiButton.addActionListener(ev -> returnAction());
 
         setLocationRelativeTo(null);
-        setSize(400, 400);
+        setSize(500, 400);
         setVisible(true);
         // pentru a pozitiona fereastra mea exact in centru ecranului
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,9 +42,12 @@ public class RetrageForm extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dispose();
-            new MainFrame();
+            returnAction();
         }
+    }
 
+    public void returnAction() {
+        dispose();
+        new MainFrame();
     }
 }

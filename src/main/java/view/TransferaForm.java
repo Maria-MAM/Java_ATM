@@ -17,8 +17,10 @@ public class TransferaForm extends JFrame {
         add(panel1);
 
         OKButton.addActionListener(ev -> transferaBani());
+        inapoiButton.addActionListener(ev -> returnAction());
+
         setLocationRelativeTo(null);
-        setSize(400, 400);
+        setSize(500, 400);
         setVisible(true);
         // pentru a pozitiona fereastra mea exact in centru ecranului
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,8 +43,12 @@ public class TransferaForm extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dispose();
-            new MainFrame();
+            returnAction();
         }
+    }
+
+    public void returnAction() {
+        dispose();
+        new MainFrame();
     }
 }

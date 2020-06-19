@@ -5,6 +5,7 @@ public class Client {
     private String nume;
     private String codClient;
     private int pin;
+    private int nrAutentificariGresite;
 
     public Client() {
     }
@@ -20,6 +21,13 @@ public class Client {
         this.nume = nume;
         this.codClient = codClient;
         this.pin = pin;
+    }
+
+    public Client(String nume, String codClient, int pin, int nrAutentificariGresite) {
+        this.nume = nume;
+        this.codClient = codClient;
+        this.pin = pin;
+        this.nrAutentificariGresite = nrAutentificariGresite;
     }
 
     public int getId() {
@@ -54,6 +62,14 @@ public class Client {
         this.pin = pin;
     }
 
+    public int getNrAutentificariGresite() {
+        return nrAutentificariGresite;
+    }
+
+    public void setNrAutentificariGresite(int nrAutentificariGresite) {
+        this.nrAutentificariGresite = nrAutentificariGresite;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
@@ -61,6 +77,7 @@ public class Client {
                 ", nume='" + nume + '\'' +
                 ", codClient='" + codClient + '\'' +
                 ", pin=" + pin +
+                ", nrAutentificariGresite=" + nrAutentificariGresite +
                 '}';
     }
 }
